@@ -43,9 +43,13 @@ export function CustomerApp({ tableLabel, tableCode }: { tableLabel: string; tab
   const [submitting, setSubmitting] = React.useState(false);
   const requestIdRef = React.useRef(newRequestId());
 
-  const { state: connectionState } = useRealtime(() => {
-    void table.refresh({ silent: true });
-  });
+  // Customer devices must subscribe to their own table scope, never the staff stream.
+  const { state: connectionState } = useRealtime(
+    () => {
+      void table.refresh({ silent: true });
+    },
+    { path: "/api/table/events" },
+  );
 
   // Restore the cart from this browser tab only (never used as the source of truth).
   React.useEffect(() => {

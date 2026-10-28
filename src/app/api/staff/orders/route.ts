@@ -9,11 +9,10 @@ export const dynamic = "force-dynamic";
 export const GET = route(async (request) => {
   await requireStaff(POS_ROLES);
   const params = request.nextUrl.searchParams;
-  const statusParam = params.get("status") ?? "active";
-  const status = (statusParam === "all" || statusParam === "active" ? statusParam : statusParam) as
-    | OrderStatus
-    | "active"
-    | "all";
+  const rawStatus = params.get("status") ?? "active";
+  // "active" is a pseudo-status understood by the service; anything else must be
+  // a real order status or it will simply return no rows.
+  const status = rawStatus as OrderStatus | "active" | "all";
   const orders = listOrders({
     status,
     tableId: params.get("tableId") ? Number(params.get("tableId")) : undefined,
