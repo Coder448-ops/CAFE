@@ -1,0 +1,98 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --font-sans: "Inter", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+    --font-display: "Iowan Old Style", "Palatino Linotype", Georgia, "Times New Roman", serif;
+    --safe-bottom: env(safe-area-inset-bottom, 0px);
+  }
+
+  * {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-cream-100 text-coffee-800 antialiased;
+    font-family: var(--font-sans);
+    text-rendering: optimizeLegibility;
+  }
+
+  h1, h2, h3, .font-display {
+    font-family: var(--font-display);
+    letter-spacing: -0.01em;
+  }
+
+  :focus-visible {
+    @apply outline-none ring-2 ring-offset-2 ring-offset-cream-100 ring-moss-500;
+  }
+
+  ::selection {
+    @apply bg-moss-100 text-coffee-900;
+  }
+
+  /* Touch targets stay comfortable on tablets and counter screens. */
+  button, a, input, select, textarea {
+    touch-action: manipulation;
+  }
+
+  input[type="number"]::-webkit-outer-spin-button,
+  input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+}
+
+@layer components {
+  .surface {
+    @apply rounded-2xl border border-coffee-100/70 bg-cream-50 shadow-card;
+  }
+
+  .input-base {
+    @apply w-full rounded-xl border border-coffee-200 bg-white px-3.5 py-2.5 text-sm text-coffee-900
+           placeholder:text-coffee-300 transition focus:border-moss-500 focus:outline-none
+           focus:ring-2 focus:ring-moss-100 disabled:cursor-not-allowed disabled:bg-cream-100;
+  }
+
+  .label-base {
+    @apply mb-1.5 block text-xs font-semibold uppercase tracking-wide text-coffee-500;
+  }
+
+  .scrollbar-slim {
+    scrollbar-width: thin;
+    scrollbar-color: theme("colors.coffee.200") transparent;
+  }
+  .scrollbar-slim::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  .scrollbar-slim::-webkit-scrollbar-thumb {
+    @apply rounded-full bg-coffee-200;
+  }
+  .scrollbar-slim::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .grid-paper {
+    background-image: radial-gradient(circle at 1px 1px, rgba(63, 46, 28, 0.08) 1px, transparent 0);
+    background-size: 22px 22px;
+  }
+}
+
+@media print {
+  .no-print {
+    display: none !important;
+  }
+  body {
+    background: white;
+  }
+  .print-area {
+    box-shadow: none !important;
+    border: none !important;
+  }
+}
